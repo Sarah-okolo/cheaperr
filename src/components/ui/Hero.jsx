@@ -28,8 +28,8 @@ export const Hero = () => {
       <div className="container mx-auto">
         <div className="flex gap-8 py-20 lg:pt-5 lg:pb-15 items-center justify-center flex-col relative">
           <div className="flex gap-4 flex-col">
-            <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-60 absolute left-[4%] top-[30%] z-[-10] opacity-90"/>
-            <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-60 absolute right-[4%] top-[30%] z-[-10] opacity-90" />
+            <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-[20%] absolute left-[4%] top-[30%] z-[-10] opacity-90"/>
+            <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-[20%] absolute right-[4%] top-[30%] z-[-10] opacity-90" />
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
               <span className="text-spektr-cyan-50">Find <b>Cheaperr</b> from</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:py-10 text-orange-600">
