@@ -64,3 +64,14 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer utilities {
+  .text-last-right {
+    text-align-last: right;
+  }
+
+  .image-clamp {
+    object-fit: cover;
+    width: clamp(100px, 70%, 600px);
+  }
+}
