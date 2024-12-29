@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 export const Hero = () => {
   const [titleNumber, setTitleNumber] = useState(0);
   const titles = useMemo(
-    () => ["Amazon", "Ebay", "AliExpress"],
+    () => ["Amazon", "eBay", "AliExpress"],
     []
   );
 
@@ -31,7 +31,7 @@ export const Hero = () => {
             <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-[20%] absolute left-[4%] top-[30%] z-[-10] opacity-90"/>
             <img src="/images/Shopping bag-amico.svg" alt="A hand holding shopping bags" className="hidden md:block w-[20%] absolute right-[4%] top-[30%] z-[-10] opacity-90" />
             <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
-              <span className="text-spektr-cyan-50">Find <b>Cheaperr</b> from</span>
+              <span className="text-spektr-cyan-50">Find <b>Cheaperr</b> on</span>
               <span className="relative flex w-full justify-center overflow-hidden text-center md:py-10 text-orange-600">
                 &nbsp;
                 {titles.map((title, index) => (
@@ -58,17 +58,14 @@ export const Hero = () => {
               </span>
             </h1>
 
-            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
-              Managing a small business today is already tough. Avoid further
-              complications by ditching outdated, tedious trade methods. Our
-              goal is to streamline SMB trade, making it easier and faster than
-              ever.
+            <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center px-10">
+               Cheaperr enables you to compare prices for your desired product across Amazon, eBay, and AliExpress, helping you find the best deal effortlessly.
             </p>
           </div>
           <div className="flex flex-row gap-3">
             <Link to="/products">
               <Button size="lg" variant="outline" className="bg-gap-4 hover:bg-orange-600 hover:text-black hover:border-orange-600 p-7 mt-6">
-                Compare prices <MoveRight className="w-4 h-4" />
+                Find Products <MoveRight className="w-4 h-4" />
               </Button>
             </Link>
           </div>

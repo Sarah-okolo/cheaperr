@@ -75,3 +75,22 @@
     width: clamp(100px, 70%, 600px);
   }
 }
+
+td {
+  padding: 25px 0;
+  text-align: center;
+}
+tr > td:first-of-type {
+  font-weight: bold;
+  font-size: 1.5rem;
+  color: #ea580c;
+}
+tr > td:nth-of-type(2) {
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+th {
+  padding: 15px 0;
+  text-align: center;
+  font-size: 1.4rem;
+}

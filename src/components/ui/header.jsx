@@ -1,7 +1,16 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 
 function Header() {
+  const location = useLocation();
+
+  useEffect(() => {
+    if (document.documentElement.scrollTop > 0) {
+      document.documentElement.scrollTop = 0;
+    }
+  }, [location]);
+
+
   return (
     <>
       <div>

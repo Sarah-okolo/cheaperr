@@ -12,18 +12,16 @@ export const CTA1 = () => (
         </div>
         <div className="flex flex-col gap-8">
           <h3 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-orange-600 font-bold">
-            Try our platform today!
+            Get Cheaperr today!
           </h3>
           <p className="text-lg leading-relaxed tracking-tight text-muted-foreground max-w-xl">
-            Managing a small business today is already tough. Avoid further
-            complications by ditching outdated, tedious trade methods. Our goal
-            is to streamline SMB trade, making it easier and faster than ever.
+            Why waste time searching for the best prices when you can get them all in one place? Get started with Cheaperr today and start saving money.
           </p>
         </div>
         <div className="flex flex-row gap-4">
           <Link to="/products">
             <Button size="lg" variant="outline" className="bg-gap-4 hover:bg-orange-600 hover:border-orange-600 mt-5">
-              Find products <MoveRight className="w-4 h-4" />
+              Get Cheaperr <MoveRight className="w-4 h-4" />
             </Button>
           </Link>
         </div>
