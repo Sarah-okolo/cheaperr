@@ -57,7 +57,6 @@ export const Hero = () => {
                 ))}
               </span>
             </h1>
-
             <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center px-10">
                Cheaperr enables you to compare prices for your desired product across Amazon, eBay, and AliExpress, helping you find the best deal effortlessly.
             </p>

@@ -7,6 +7,8 @@
 
 [Cheaperr](https://cheaperr.netlify.app/) is a price comparison platform that allows you to compare prices for your desired product across Amazon, eBay, and AliExpress, helping you find the best deal effortlessly.
 
+![Solution preview](/images/solution-preview.png)
+
 ## Built with
 
 - Reactjs

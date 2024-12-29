@@ -5,49 +5,61 @@ import { useState, useEffect } from 'react';
 function ComparePrices() {
   const { searchTerm } = useSearchTermStore();
   const { responseData } = useResponseDataStore();
-  const [ amazonCheapestPrice, setAmazonCheapestPrice ] = useState('');
-  const [ ebayCheapestPrice, setEbayCheapestPrice ] = useState('');
-  const [ aliCheapestPrice, setAliCheapestPrice ] = useState('');
+  const [ cheaperPrice, setCheaperPrice ] = useState([]);
   const { products } = useProductsStore();
 
-  // Function to get the cheapest price for the searched item.
-  const getCheapestPrice = (site) => {
-    let cheapestPrice = '';
-    let cheapestPriceValue = 0;
-    let siteData = responseData[site];
-    if (siteData.length > 0) {
-      cheapestPrice = siteData[0].price;
-      cheapestPriceValue = parseFloat(siteData[0].price.replace('$', ''));
-      for (let i = 1; i < siteData.length; i++) {
-        let currentPriceValue = parseFloat(siteData[i].price.replace('$', ''));
-        if (currentPriceValue < cheapestPriceValue) {
-          cheapestPrice = siteData[i].price;
-          cheapestPriceValue = currentPriceValue;
-        }
+  const toNumber = (price) => {
+    return parseFloat(price.replace(/[^0-9.-]+/g, ''));
+  };
+  
+  const getCheaperPrice = () => {
+      // Extract prices and handle potential null or invalid values
+      const amazonPrice = responseData.amazon?.[0] ? toNumber(responseData.amazon[0].price) : NaN;
+      const ebayPrice = responseData.ebay?.[0] ? toNumber(responseData.ebay[0].price) : NaN;
+      const aliexpressPrice = responseData.aliexpress?.[0] ? toNumber(responseData.aliexpress[0].price) : NaN;
+  
+      // Filter valid prices
+      const prices = [amazonPrice, ebayPrice, aliexpressPrice].filter(price => !isNaN(price));
+      if (prices.length === 0) {
+        console.log("No valid prices available");
+        return;
       }
-    }
-    return cheapestPrice;
-  }
+  
+      // Find the minimum price
+      const minPrice = Math.min(...prices);
+      // Set the product with the cheapest price
+      if (minPrice === amazonPrice) {
+        setCheaperPrice(responseData.amazon[0]);
+      } else if (minPrice === ebayPrice) {
+        setCheaperPrice(responseData.ebay[0]);
+      } else if (minPrice === aliexpressPrice) {
+        setCheaperPrice(responseData.aliexpress[0]);
+      }
+  };
+  
 
-  // Set the cheapest price for the item on each site
   useEffect(() => {
-    console.log(responseData);
-    if ( responseData.length > 0 ) {
-      setAmazonCheapestPrice(getCheapestPrice('amazon'));
-      setEbayCheapestPrice(getCheapestPrice('ebay'));
-      setAliCheapestPrice(getCheapestPrice('aliexpress'));
+    console.log(Object.keys(responseData).length);
+    if (responseData && Object.keys(responseData).length > 0) {
+      getCheaperPrice();
+    } else {
+      console.log("Response data is empty or invalid");
     }
-  }, [responseData]);
+  }, [responseData])
+
+  useEffect(() => {
+    console.log(cheaperPrice)
+  }, [cheaperPrice])
 
   return (
     <>
-      <div className=''>
-        <div className="flex gap-10 items-center mx-auto md:w-1/2 mt-6 relative left-24">
+      <div className='p-10'>
+        <div className="flex flex-col justify-center md:flex-row gap-10 items-center mx-auto md:w-1/2 mt-6 relative md:left-24">
           <div>
-            <img src={products[0].image} alt={products[0].title} className="border-2 rounded-md aspect-square w-60 h-40 object-contain"/>
+            <img src={products.length > 0 ? products[0].image : '/images/placeholder-image.png'} alt={products.length > 0 ? products[0].title : ''} className="border-2 rounded-md aspect-square w-60 h-40 object-contain"/>
           </div>
           <div className='grid gap-6'>
-            <h1 className="text-4xl tracking-tight">{searchTerm}</h1>
+            <h1 className="text-3xl tracking-tight text-center md:text-left">{searchTerm ? searchTerm : 'N/A'}</h1>
           </div>
         </div>
         <div className='w-4/5 border mx-auto my-16'></div>
@@ -61,21 +73,21 @@ function ComparePrices() {
         <tbody>
           <tr>
             <td>Amazon</td>
-            <td>{ amazonCheapestPrice !== '' ? amazonCheapestPrice : 'N/A' }</td>
+            <td>{ Object.keys(responseData).length > 0 && responseData.amazon[0] ? responseData.amazon[0].price : 'N/A' }</td>
           </tr>
           <tr>
             <td>eBay</td>
-            <td>{ ebayCheapestPrice !== '' ? ebayCheapestPrice : 'N/A' }</td>
+            <td>{ Object.keys(responseData).length > 0 && responseData.ebay[0] ? responseData.ebay[0].price : 'N/A' }</td>
           </tr>
           <tr>
             <td>AliExpress</td>
-            <td>{ aliCheapestPrice !== '' ? aliCheapestPrice : 'N/A' }</td>
+            <td>{ Object.keys(responseData).length > 0 && responseData.aliexpress[0] ? responseData.aliexpress[0].price : 'N/A' }</td>
           </tr>
         </tbody>
         </table>
 
         <div className=' mx-10 md:mx-30 my-20 grid place-items-center'>
-          <p className='text-xl mt-6 tracking-wide'>This product can be gotten at a <span className='font-bold'>cheaperr</span> price from <a href='#' className='text-orange-600 font-bold underline'>AliExpress</a></p>
+          <p className='text-xl mt-6 tracking-wide'>This product can be gotten at a <span className='font-bold'>cheaperr</span> price on <a href={cheaperPrice ? (cheaperPrice.site === 'Amazon' ? `https://www.amazon.com${cheaperPrice.url}` : cheaperPrice.url) : '#'} target="_blank" className='text-orange-600 font-bold underline'>{cheaperPrice ? cheaperPrice.site : '...'}</a></p>
         </div>
       </div>
     </>
