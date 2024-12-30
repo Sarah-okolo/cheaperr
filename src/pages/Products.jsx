@@ -35,31 +35,53 @@ function Products() {
   // Function to fetch products from the backend server
   const fetchProducts = async () => {
     if (searchInputRef.current.value !== "") {
-      setSearching(true);
-      changeText();
-      try {
-        setErrMsg(null);
-        const response = await fetch(`https://cheaper-node-server.vercel.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}`);
-        if (!response.ok) {
-            throw new Error();
+        setSearching(true);
+        changeText();
+        try {
+            setErrMsg(null);
+            const results = await Promise.allSettled([
+                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=amazon`),
+                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=ebay`),
+                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=aliexpress`)
+            ]);
+ 
+            const amazonData = await handleFetchResponse(results[0]);
+            const ebayData = await handleFetchResponse(results[1]);
+            const aliexpressData = await handleFetchResponse(results[2]);
+ 
+            // Store the data for each site
+            let data = { amazon: amazonData, ebay: ebayData, aliexpress: aliexpressData };
+            // Update state with all data once all requests have finished
+            setResponseData(data);
+            // Merge all data into one array
+            setProducts([...data.amazon, ...data.ebay, ...data.aliexpress]);
+ 
+            console.log(data)
+            setSearching(false);
+            setReceivedData(true);
+            setSearchTerm(searchInputRef.current.value);
+        } catch (error) {
+            console.error("Error fetching products:", error);
+            setErrMsg("OOPS! An error occurred while finding product. Please try again in a few seconds.");
+            setSearching(false);
         }
-        const data = await response.json();
-        setResponseData(data);
-        setProducts([...data.amazon, ...data.ebay, ...data.aliexpress]);
-        setSearching(false);
-        setReceivedData(true)
-        setSearchTerm(searchInputRef.current.value);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setErrMsg("OOPS! An error occured while finding product. Please try again in a few seconds.");
-        setSearching(false);
-      }
+    } else {
+        searchInputRef.current.classList.add('border-red-600');
     }
-    else {
-      searchInputRef.current.classList.add('border-red-600');
-    }
-  };
-
+ };
+ 
+ // Helper function to handle fetch response and catch errors
+ const handleFetchResponse = async (result) => {
+     if (result.status === 'fulfilled') {
+         const data = await result.value.json();
+         return data;
+     } else {
+         console.error(`Error with site: ${result.reason}`);
+         return []; // Return an empty array if the fetch fails
+     }
+ };
+ 
+  
   // Function to handle search input validation
   const handleSearchInput = () => {
     if (searchInputRef.current.value == "") {
