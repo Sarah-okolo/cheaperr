@@ -11,20 +11,18 @@ function ComparePrices() {
   const toNumber = (price) => {
     return parseFloat(price.replace(/[^0-9.-]+/g, ''));
   };
-  
+
   const getCheaperPrice = () => {
       // Extract prices and handle potential null or invalid values
       const amazonPrice = responseData.amazon?.[0] ? toNumber(responseData.amazon[0].price) : NaN;
       const ebayPrice = responseData.ebay?.[0] ? toNumber(responseData.ebay[0].price) : NaN;
       const aliexpressPrice = responseData.aliexpress?.[0] ? toNumber(responseData.aliexpress[0].price) : NaN;
-  
       // Filter valid prices
       const prices = [amazonPrice, ebayPrice, aliexpressPrice].filter(price => !isNaN(price));
       if (prices.length === 0) {
         console.log("No valid prices available");
         return;
       }
-  
       // Find the minimum price
       const minPrice = Math.min(...prices);
       // Set the product with the cheapest price
@@ -39,17 +37,11 @@ function ComparePrices() {
   
 
   useEffect(() => {
-    console.log(Object.keys(responseData).length);
     if (responseData && Object.keys(responseData).length > 0) {
       getCheaperPrice();
-    } else {
-      console.log("Response data is empty or invalid");
     }
   }, [responseData])
 
-  useEffect(() => {
-    console.log(cheaperPrice)
-  }, [cheaperPrice])
 
   return (
     <>
