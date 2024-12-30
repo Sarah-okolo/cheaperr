@@ -39,7 +39,7 @@ function Products() {
       changeText();
       try {
         setErrMsg(null);
-        const response = await fetch(`https://aae1-102-88-71-11.ngrok-free.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}`);
+        const response = await fetch(`https://cheaper-node-server.vercel.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}`);
         if (!response.ok) {
             throw new Error();
         }
