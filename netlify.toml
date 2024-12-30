@@ -1,0 +1,5 @@
+[[redirects]]
+from = "/scrape/*"
+to = "https://cheaper-node-server.vercel.app/scrape/:splat"
+status = 200
+force = true
