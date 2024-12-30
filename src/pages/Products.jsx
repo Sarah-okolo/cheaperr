@@ -56,7 +56,6 @@ function Products() {
             // Merge all data into one array
             setProducts([...data.amazon, ...data.ebay, ...data.aliexpress]);
  
-            console.log(data)
             setSearching(false);
             setReceivedData(true);
             setSearchTerm(searchInputRef.current.value);
