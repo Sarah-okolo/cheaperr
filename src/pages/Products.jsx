@@ -40,9 +40,9 @@ function Products() {
         try {
             setErrMsg(null);
             const results = await Promise.allSettled([
-                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=amazon`),
-                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=ebay`),
-                fetch(`http://localhost:3000/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=aliexpress`)
+                fetch(`https://cheaper-node-server.vercel.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=amazon`),
+                fetch(`https://cheaper-node-server.vercel.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=ebay`),
+                fetch(`https://cheaper-node-server.vercel.app/scrape?search=${encodeURIComponent(searchInputRef.current.value)}&site=aliexpress`)
             ]);
  
             const amazonData = await handleFetchResponse(results[0]);
